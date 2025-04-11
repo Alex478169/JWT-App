@@ -1,11 +1,3 @@
+from Flask import Flask, render_template
 
-def main:
-    '''
-    ehmmm non lo so, immagino che qui debba creare una web app, quindi inserire delle richieste HTTP. Ora che ci penso
-    questo sarebbe possibile con la classe "request"? oppure è usata principalmente per fare richieste http ad altri siti?
-    '''
-    return ""
-
-
-if __name__ == "main":
-    main()
+#potrei creare un sito web in cui viene usato il jwt token per accedere al sito e fare poi cose
