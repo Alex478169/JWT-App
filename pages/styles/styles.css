@@ -1,0 +1,22 @@
+button{
+    margin-top: 10px; 
+    margin-bottom: 10px; 
+    padding-top: 10px; 
+    padding-bottom: 10px; 
+    font-size: larger;
+    border-radius: 8px;
+}
+button:hover {
+    text-shadow: 2px;
+}
+
+input {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 6px;
+    font-size: large;
+}
+
+p {
+    font-size: large;
+}
