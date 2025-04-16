@@ -1,0 +1,27 @@
+<html>
+    <head>
+      <link rel="stylesheet" href="{{ url_for('static', filename='/styles/styles.css') }}">
+        <title>home</title>
+        <script>
+          function toHome()
+          {window.location.href="home";}
+      </script>
+    </head>
+    <body>
+      <div style="display: flex; flex-direction: column;">
+        <h1>Home</h1>
+        <div style="display: flex; flex-direction: column;">
+            <p>nome utente</p>
+            <input type="text">
+            <p>password</p>
+            <input type="text"> <!--la password potrebbe essere salvata all'interno di un database-->
+            <div style="justify-content: space-between; width: 100%;">
+              <a href="./passwordDimenticata.html">Password dimenticata?</a>
+              
+              <!--quando clicco invia dovrebbre generarsi il token JWT dell'utente-->
+              <button type="submit" onclick="toHome()">Invia</button>
+            </div>
+       </div>
+    </div>
+    </body>
+</html>
