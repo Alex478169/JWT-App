@@ -20,6 +20,21 @@ def insertJobApplication(config, appDate: str, contEmail: str, compName: str, jo
      except (psycopg2.DatabaseError, Exception) as error:
         print(error)
 
-if __name__ == "__main__":
-    config = load_config()
-    connect(config)
+def connect(config):
+    try:
+        with psycopg2.connect(**config) as conn:
+            print("Good job boy! you are connected to the database!")
+            return conn
+    except (psycopg2.DatabaseError, Exception) as error:
+            print(error)
+
+def showValues(config, column: str):
+    try:
+        # connecting to the PostgreSQL server
+        with psycopg2.connect(**config) as conn:
+            cur = conn.cursor()
+            cur.execute(f"select {column} from job_application;")
+            pippo = cur.fetchall()
+            return pippo
+    except (psycopg2.DatabaseError, Exception) as error:
+        print(error)

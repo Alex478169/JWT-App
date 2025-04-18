@@ -8,38 +8,58 @@
 <body>
     <div style="display: flex; flex-direction: column;">
         <!--campi della tabella-->
-        <div style="display: flex; flex-direction: row;">
-            <div>Application_date</div>
-            <div>Contact_email</div>
-            <div>Company_name</div>
-            <div>Job_Title</div>
-            <div>Job_Url</div>
-            <div>Resume_Name</div>
-        </div>
-        <!--Celle della tabella-->
-        <div style="display: flex; flex-direction: row;">
-            <!--primo campo-->
-            <div></div>
-    
-            <!--secondo campo-->
-            <div></div>
+        <div style="justify-content: space-evenly; display: flex; flex-direction: row; border-color: black; border-style: dotted;">
+            <!--prima colonna-->
+            <div style="display: flex; flex-direction: column;">
+                <div>Application_date</div>
+                <!--primo campo-->
+            {% for AppDate in applicationDates %}
+            <div style="border-style: solid;">{{ AppDate[0] }}</div>
+            {% endfor %}
+            </div>
+
+            <!--seconda colonna-->
+            <div style="display: flex; flex-direction: column;">
+                <div >Contact_email</div>
+                <!--secondo campo-->
+                {%for ContEmail in contactsEmail%}
+                <div>{{ ContEmail[0] }}</div>
+                {%endfor%}
+            </div>
+
+            <!--terza colonna-->
+            <div style="display: flex; flex-direction: column;">
+                <div>Company_name</div> 
+                <!--terzo campo-->
+                {%for CompName in companyNames%}
+                <div>{{ CompName[0] }}</div>
+                {%endfor%}
+            </div>
+
+            <div style="display: flex; flex-direction: column;">
+                <div >Job_Title</div>
+                <!--quarto campo-->
+                {% for JobTitle in jobtitles %}
+                <div>{{ JobTitle[0] }}</div>
+                {% endfor %}
+            </div>
             
-            <!--terzo campo-->
-            <div></div>
-
-            <!--quarto campo-->
-            <div></div>
-
-            <!--quinto campo-->
-            <div>{{ for i in }}</div>
-
-            <!--sesto campo-->
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            <div style="display: flex; flex-direction: column;">
+                <div >Job_Url</div>
+                <!--quinto campo-->
+                {% for JobUrl in urlJobs %}
+                <div>{{ JobUrl[0] }}</div>
+                {% endfor %}
+            </div>
+            
+            <div style="display: flex; flex-direction: column;">
+                <div >Resume_Name</div>
+                <!--sesto campo-->
+                {% for ResName in resumeNames%}
+                <div>{{ ResName[0] }}</div>
+                {% endfor %}
+            </div>
+        </div>
         </div>
     </div>
 </body>
