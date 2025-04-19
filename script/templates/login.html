@@ -1,6 +1,6 @@
 <html>
     <head>
-      <link rel="stylesheet" href="{{ url_for('static', filename='/styles/styles.css') }}">
+      <link rel="stylesheet" href="styles/styles.css">
         <title>home</title>
         <script>
           function toHome()
@@ -8,20 +8,22 @@
       </script>
     </head>
     <body>
-      <div style="display: flex; flex-direction: column;">
-        <h1>Home</h1>
-        <div style="display: flex; flex-direction: column;">
-            <p>nome utente</p>
-            <input type="text">
-            <p>password</p>
-            <input type="text"> <!--la password potrebbe essere salvata all'interno di un database-->
-            <div style="justify-content: space-between; width: 100%;">
+      <div style="border-radius: 20px; display: flex; flex-direction: column; background-color: cadetblue; width: 50%; margin-left: auto; margin-right: auto; margin: 0; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);">
+        <h1 style="margin-left: auto; margin-right: auto;">login</h1>
+          <div style="display: flex; flex-direction: column;">
+            <div style="display: flex; flex-direction: column; margin-left: 30px; margin-right: 30px;">
+              <p>nome utente</p>
+              <input type="text">
+              <p>password</p>
+              <input type="password"> <!--la password potrebbe essere salvata all'interno di un database-->
+            </div>
+            <div style="display: flex; justify-content: space-evenly; align-items: center; margin-top: 20px; margin-bottom: 20px;">
               <a href="./passwordDimenticata.html">Password dimenticata?</a>
-              
               <!--quando clicco invia dovrebbre generarsi il token JWT dell'utente-->
               <button type="submit" onclick="toHome()">Invia</button>
             </div>
+          </div>
+
        </div>
-    </div>
     </body>
 </html>

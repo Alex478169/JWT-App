@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/styles.css') }}">
+    <link rel="stylesheet" href="script/static/styles/styles.css">
     <script>
         function toSettings(){
             window.location.href="settings";
@@ -28,7 +28,6 @@
     <!--qua bo, dovrei semplicemente fare prima una tabella su un db (facendo un sondaggio e pensando ai campi da inserire) e poi immettere i dati nella pagina. Nella stessa ci dovrebbero essere dei campi per inserire la candidatura e i vari contatti-->
     <!--Oppure, cosa che potrebbe mettere più ad agio gli utenti, è permettere di importare il proprio excel o di usare quello che ha online-->
         <button type="button" id="excel" name="excel" onclick="">tabella candidature</button>
-        <button onclick="toSettings()" type="button" id="settings" name="settings">settings</button>
         <button onclick="toLogin()" type="submit">esci</button>
     </div>
 </body>

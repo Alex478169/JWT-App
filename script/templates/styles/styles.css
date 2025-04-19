@@ -1,20 +1,30 @@
 button{
     margin-top: 10px; 
     margin-bottom: 10px; 
-    padding-top: 10px; 
-    padding-bottom: 10px; 
+    padding-top: 15px; 
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px; 
     font-size: larger;
+    font-weight: bold;
     border-radius: 8px;
 }
 button:hover {
     text-shadow: 2px;
 }
 
+input:hover{
+    border-color:blue
+}
+
+
 input {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 6px;
     font-size: large;
+    border-radius: 10px;
+    border: none
 }
 
 p {
