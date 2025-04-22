@@ -3,16 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='./static/styles/styles.css') }}">
     <title>Document</title>
+    <script>
+        function toLogin() {
+            window.location.href="/";
+        }
+    </script>
 </head>
 <body>
-    <p>username</p>
-    <input type="text">
-    <p>password</p>
-    <input type="text">
-    <p>username</p>
-    <input type="text">
-    <p></p>
+    <div style="border-radius: 20px; display: flex; flex-direction: column; background-color: cadetblue; width: 50%; margin-left: auto; margin-right: auto; margin: 0; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);">
+        <h1 style="margin-left: auto; margin-right: auto;">register</h1>
+          <div style="display: flex; flex-direction: column;">
+            <form action="/" method="post">
+                <div style="display: flex; flex-direction: column; margin-left: 30px; margin-right: 30px;">
+                    <p>nome utente</p>
+                    <input type="text" name="username">
+                    <p>password</p>
+                    <input type="password" name="password"> <!--la password potrebbe essere salvata all'interno di un database-->
+                </div>
+                <div style="margin-top: 20px; margin-bottom: 20px; text-align: center;">
+                    <button type="submit">registrati</button>
+                </div>
+            </form>
+          </div>
+       </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="script/static/styles/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/styles.css') }}">
     <script>
         function toSettings(){
             window.location.href="settings";
@@ -24,7 +24,6 @@
     <!--dovresti navigare su linkedin, quindi un collegamento direttamente a Linkedin che lo imposti te nelle configurazioni-->
     <div style="display: flex; flex-direction: column;">
         <button type="button" id="linkedin" name="linkedin" onclick="toJobApplications()">link candidature</button>
-    <!--la seconda opzione, a cui potrebbe accedere chiunque, ti porta a una tabella di candidature, con contatti, data di inizio e altro-->
     <!--qua bo, dovrei semplicemente fare prima una tabella su un db (facendo un sondaggio e pensando ai campi da inserire) e poi immettere i dati nella pagina. Nella stessa ci dovrebbero essere dei campi per inserire la candidatura e i vari contatti-->
     <!--Oppure, cosa che potrebbe mettere più ad agio gli utenti, è permettere di importare il proprio excel o di usare quello che ha online-->
         <button type="button" id="excel" name="excel" onclick="">tabella candidature</button>
