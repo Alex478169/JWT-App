@@ -39,6 +39,10 @@ def login():
 def home():
     return render_template("home.html")
 
+@app.route("/options")
+def candidatureOptions():
+    return render_template("options.html")
+
 @app.route("/candidature")
 def candidature():
     try:
