@@ -22,9 +22,11 @@ input {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 6px;
-    font-size: large;
+    font-size: larger;
     border-radius: 10px;
-    border: none
+    margin-top: 10px;
+    margin-bottom: 10 px;
+
 }
 
 p {

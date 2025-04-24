@@ -1,4 +1,5 @@
 import psycopg2
+import pandas as pd
 
 def viewDataTable(config, table: str):
     try:
@@ -33,7 +34,7 @@ def showValues(config, column: str):
         # connecting to the PostgreSQL server
         with psycopg2.connect(**config) as conn:
             cur = conn.cursor()
-            cur.execute("select %s from job_application;", column)
+            cur.execute(f"select {column} from job_application;")
             rows = cur.fetchall()
             return rows
     except (psycopg2.DatabaseError, Exception) as error:
@@ -76,3 +77,49 @@ def compareValues(config, username:str, password:str):
 
     except (psycopg2.DatabaseError, Exception) as error:
         return str(error)
+
+def fromCSVToSQL(config, file: str, table:str):
+    df = pd.read_csv(file)
+    #modifica il contenuto di una cella su una riga esatta (tipo query di UPDATE)
+    df.loc[df["Application Date"] == "9/9/24, 8:21 AM", "Company Name"] = "Tecne - Gruppo Autostrade per Italia"
+    df.to_csv(file)
+    insertQueries=[]
+
+        #itera sulle righe
+    for _,row in df.iterrows():
+        application_date = row["Application Date"].replace("'", "''")
+        contact_email = row["Contact Email"].replace("'", "''")
+        company_name = row["Company Name"].replace("'", "''")
+        job_title = row["Job Title"].replace("'", "''")
+        job_url = row["Job Url"].replace("'", "''")
+        resume_name = row["Resume Name"].replace("'", "''")
+        print(application_date)
+
+        sqlInsert = f"INSERT INTO {table}(application_date, contact_email, company_name, job_title, job_url, resume_name) VALUES ('{application_date}', '{contact_email}', '{company_name}', '{job_title}', '{job_url}', '{resume_name}');"
+        insertQueries.append(sqlInsert)
+        try:
+            with psycopg2.connect(**config) as conn:
+                cur = conn.cursor()
+                for sql in insertQueries:    
+                    cur.execute(sql)
+                    conn.commit()
+        except (psycopg2.DatabaseError, Exception) as error:
+            return str(error)
+    return "tutto è andato buon fine"
+
+def searchSomething(config, company:str):
+    try:
+        # connecting to the PostgreSQL server
+        with psycopg2.connect(**config) as conn:
+            #creazione di un cursore
+            cur = conn.cursor()
+
+            #esecuzione di una query che trova la password dell'utente richiesto
+            cur.execute(f"select distinct * from job_application where company_name='{company}';")
+            #e prende il valore
+            value = cur.fetchone()
+            print(value)
+            return value
+    except (psycopg2.DatabaseError, Exception) as error:
+        return str(error)
+    return "hai cercato qualcosa"

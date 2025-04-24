@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, url_for
-from dbOperations import connect, showValues, insertValues, compareValues
+from dbOperations import connect, showValues, insertValues, compareValues, fromCSVToSQL, viewDataTable, searchSomething
 from config import load_config
 import psycopg2
+import pandas as pd
 
 #potrei creare un sito web in cui viene usato il jwt token per accedere al sito e fare poi cose
 
@@ -43,20 +44,35 @@ def home():
 def candidatureOptions():
     return render_template("options.html")
 
-@app.route("/candidature")
+@app.route("/candidature", methods=["GET"])
 def candidature():
+    file = "/home/ale/Downloads/Jobs/Job_Applications.csv"
+    table = "job_application"
+
+    company=request.form.get("company")
+    email=request.form.get("email")
+    
+    if request.method == "GET":
+        searchSomething(config, company)
+
+    applicationDates= showValues(config, "application_date")
+    contactsEmail = showValues(config, "contact_email")
+    companyNames = showValues(config, "company_name")
+    jobtitles = showValues(config, "job_title")
+    urlJobs = showValues(config, "job_url")
+    resumeNames = showValues(config, "resume_name")
+    
+    print(applicationDates)
     try:
-        with psycopg2.connect(**config) as conn:
-            applicationDates=showValues(config, "application_date")
-            contactsEmail = showValues(config, "contact_email")
-            companyNames = showValues(config, "company_name")
-            jobtitles = showValues(config, "job_title")
-            urlJobs = showValues(config, "job_url")
-            resumeNames = showValues(config, "resume_name")
+        if viewDataTable(config, "job_application") is not None:
+            pass
+        else:
+            fromCSVToSQL()
+            return render_template("tabellaCandidature.html", applicationDates=applicationDates, contactsEmail=contactsEmail, companyNames=companyNames, jobtitles=jobtitles, urlJobs=urlJobs, resumeNames=resumeNames)
     except (psycopg2.DatabaseError, Exception) as error:
-        print(error)
-    #Io penso che 
-    return render_template("tabellaCandidature.html", applicationDates=applicationDates, contactsEmail=contactsEmail, companyNames=companyNames, jobtitles=jobtitles, urlJobs=urlJobs, resumeNames=resumeNames)
+        return str(error)
+        
+    return render_template("tabellaCandidature.html", applicationDates=applicationDates, contactsEmail=contactsEmail, companyNames=companyNames, jobtitles=jobtitles, urlJobs=urlJobs, resumeNames=resumeNames) 
 
 if __name__ == "__main__":
     config = load_config()
