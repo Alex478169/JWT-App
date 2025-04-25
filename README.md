@@ -1,5 +1,6 @@
-# JWT-App
-A Python application that used the open standard JWT to encrypt communication between a pc and a server.
+# Job application helper
+
+A Python application that can be used from everyone to trace owns job applications and check the job applications applied. I think that to find a job, together with the idea of ​​connecting your social networks to improve your visibility and give value to their work experiences, could be useful have a tool that help people to check job applications history and other information. 
 
 # Objectives
 1. Create a pretty UX
