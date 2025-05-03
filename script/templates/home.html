@@ -14,20 +14,19 @@
         function toLogin(){
             window.location.href="/"
         }
+	function toOptions(){
+	    window.location.href="options"
+	}
     </script>
     <title>Document</title>
 </head>
 <body style="background-color: cadetblue;">
-    <!--qua c'è una home con delle opzioni-->
     <h1 style="text-align: center;">home</h1>
-    <!--la prima opzione, opzionale in realtà perché la puoi impostare te, è accedere al profilo linkedin-->
-    <!--dovresti navigare su linkedin, quindi un collegamento direttamente a Linkedin che lo imposti te nelle configurazioni-->
     <div style="display: flex; flex-direction: column;">
-        <button type="button" id="linkedin" name="linkedin" onclick="toJobApplications()">link candidature</button>
-    <!--qua bo, dovrei semplicemente fare prima una tabella su un db (facendo un sondaggio e pensando ai campi da inserire) e poi immettere i dati nella pagina. Nella stessa ci dovrebbero essere dei campi per inserire la candidatura e i vari contatti-->
-    <!--Oppure, cosa che potrebbe mettere più ad agio gli utenti, è permettere di importare il proprio excel o di usare quello che ha online-->
-        <button type="button" id="excel" name="excel" onclick="">tabella candidature</button>
-        <button onclick="toLogin()" type="submit">esci</button>
+    
+    <button type="button" id="linkedin" name="linkedin" onclick="toJobApplications()">link candidature</button>
+    <button type="button" id="excel" name="excel" onclick="toOptions()">tabella candidature</button>
+    <button onclick="toLogin()" type="submit">esci</button>
     </div>
 </body>
 </html>

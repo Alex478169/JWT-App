@@ -19,10 +19,20 @@
 <body>
     <div style="display: flex; flex-direction: column;">
         <h1>Che cosa vuoi fare?</h1>
+	
         <div style="display: flex; flex-direction: column;">
-            <button>importare un proprio excel</button>
-            <button onclick="toCandidature()">usare il file di archivio scaricato</button>
-        </div>
+            <form action='\options', method="POST" enctype="multipart/form-data">
+                <button onclick="document.getElementById('fileInput').click()" accept="text/csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">importare un proprio excel</button>
+	            <input type="file" id="fileInput" style="display:none;" name="excel" />
+                
+            </form>
+        <!--secondo form-->        
+        <form action='\options', method="POST" enctype="multipart/form-data">
+	        <button onclick="document.getElementById('fileInput2').click()">Usare il file di archivio Linkedin scaricato</button>
+	        <input type="file" id="fileInput2" style="display:none" name="archive" accept="text/csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+	        <input type="submit" value="Upload" style="display:none;" />
+        </form>
+	    </div>	
     </div>
 </body>
 </html>
