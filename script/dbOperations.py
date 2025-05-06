@@ -1,5 +1,6 @@
 import psycopg2
 import pandas as pd
+from fileManipulator import *
 
 def viewDataTable(config, table: str):
     """
@@ -38,21 +39,21 @@ def insertJobApplication(config, appDate: str, contEmail: str, compName: str, jo
     returns:
         str: errore di connessione al database postgresql
     """
-     try:
+    try:
         with psycopg2.connect(**config) as conn:
             cur = psycopg2.cursor()
             cur.execute("INSERT INTO job_application(Application_Date, Contact_Email, Company_Name, Job_Title, Job_Url, Resume_Name) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');", appDate, contEmail, compName, jobTitle, jobUrl, resName)
             cur.commit()
             return conn
-     except (psycopg2.DatabaseError, Exception) as error:
+    except (psycopg2.DatabaseError, Exception) as error:
         return str(error)
 
-'''def connect(config):
+def connect(config):
     try:
         with psycopg2.connect(**config) as conn:
             return "Good job boy! you are connected to the database!"
     except (psycopg2.DatabaseError, Exception) as error:
-            return str(error)'''
+            return str(error)
 
 def showValues(config, column: str):
     """
@@ -95,7 +96,7 @@ def insertValues(config, username:str, password:str):
                 if username in row and password in row :
                     return "l'utente esiste già, attaccati"
                 else:
-                    cur.execute(f"INSERT INTO users(id, username, password) VALUES ('%s', '%s');", username, password)
+                    cur.execute("INSERT INTO users(id, username, password) VALUES ('{0}', '{1}');", username, password)
                     conn.commit()
                     return "hai inserito un nuovo utente"
     except (psycopg2.DatabaseError, Exception) as error:
@@ -116,9 +117,9 @@ def compareValues(config, username:str, password:str):
     try:
         with psycopg2.connect(**config) as conn:
             cur = conn.cursor()
-            cur.execute(f"SELECT password FROM users WHERE username='{username}'")
+            cur.execute("SELECT password FROM users WHERE username='{0}'", username)
             value = cur.fetchone()
-                           
+
             if password in value[0]:
                 return True
             else:
@@ -140,22 +141,7 @@ def fromCSVToSQL(config, file: str):
     """
     insert_queries=[]
     
-    while True:
-        try:
-            df = pd.read_csv(file)
-            break
-        except Exception(FileNotFoundError) as error:
-            print(error)
-            break
-        except Exception(ValueError) as error:
-            print(error)
-            break
-        except Exception(ImportError) as error:
-            print(error)
-            break
-        except Exception(PermissionError) as error:
-            print(error)
-            break
+    df = pd.read_csv(file)
 
     df.loc[df["Application Date"] == "9/9/24, 8:21 AM", "Company Name"] = "Tecne - Gruppo Autostrade per Italia"
     df.to_csv(file)
@@ -186,27 +172,15 @@ def fromExcelToSQL(config, file:str):
 
     ritorna:
         str: errore di connessione al database postgresql
-    """    
+    """
     val = []
     val_new = []
+    dfLen=len(df.columns)
 
-    while True:
-        try:
-            df = pd.read_excel(file)
-            break
-        except Exception(FileNotFoundError) as error:
-            print(error)
-            break
-        except Exception(ValueError) as error:
-            print(error)
-            break
-        except Exception(ImportError) as error:
-            print(error)
-            break
-        except Exception(PermissionError) as error:
-            print(error)
-            break
-           
+    df= pd.read_excel(file)
+   
+    create(dfLen)
+
     for col_name in df.columns: 
         for col in df.itertuples():
             row_value = getattr(col, col_name, "N/A")
@@ -216,22 +190,8 @@ def fromExcelToSQL(config, file:str):
         value = val[num].replace("’", "")
         val_new.append(value)
         num += 1
-    
-    try:
-        with psycopg2.connect(**config) as conn:
-            columns = []
-            for cols in df.columns:
-                Cols = "'" + cols + "' ,"
-                columns.append(cols)
-                for i in df.itertuples():
-                    for n in columns:
-                        num = 0
-                        row_val = getattr(col, columns[num], "N/A")
-                        num += 1            
-                        cur = conn.cursor()
-                        cur.execute(f"insert into job_application({columns}) VALUES ({row_val});")
-    except (psycopg2.DatabaseError, Exception) as error:
-        return str(error)
+        
+    insert(dfLen)
          
 def searchSomething(config, company:str):
     """
@@ -244,11 +204,10 @@ def searchSomething(config, company:str):
     returns:
         str: errore di connessione al database
     """
-
     try:
         with psycopg2.connect(**config) as conn:
             cur = conn.cursor()
-            cur.execute(f"select distinct * from job_application where company_name='{company}';")
+            cur.execute("select distinct * from job_application where company_name='{0}';", company)
             value = cur.fetchone()
             return value
     except (psycopg2.DatabaseError, Exception) as error:

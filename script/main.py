@@ -1,31 +1,16 @@
 from dbOperations import *
 from config import load_config
-from flask_jwt_extended import JWTManager, create_access_token
-from authlib.integrations.flask_client import OAuth
+#from flask_jwt_extended import JWTManager, create_access_token
+#from authlib.integrations.flask_client import OAuth
 import os
-#Prova ad importare le librerie corrette
-try:
-    from flask import Flask, render_template, request, url_for
-except:
-    print("non è stato importato il pacchetto 'flask' per utilizzare il microframework flask")
-    print("Per installarlo, usare il comando 'pip install -r requirements.txt' nel terminale")
-
-try: 
-    import psycopg2
-except:
-    print("non è stato importato il pacchetto 'psycopg2' per la comunicazione con il database postgresql.")
-    print("Per installarlo, usare il comando 'pip install -r requirements.txt' nel terminale")
-
-try:
-    import pandas as pd
-except:
-    print("non è stato installato il pacchetto 'pandas'.")
-    print("Per installarlo, usare il comando 'pip install -r requirements.txt' nel terminale")
+from flask import Flask, render_template, request, url_for
+import psycopg2
+import pandas as pd
 
 app = Flask(__name__)
 
 #imposta la chiave segreta per le sessioni Flask utilizzando una variabile d'ambiente
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "NadaAmePiruAttoCarrell1253484")
+'''app.secret_key = os.environ.get("FLASK_SECRET_KEY", "NadaAmePiruAttoCarrell1253484")
 #configurazione delle chiavi di sicurezza utilizzando variabili d'ambiente
 app.config["secret"] = os.environ.get("secret", "v7+MPnCh66xstznZq9mJ7nMMCrXxmdZrVIxrHuUdr18K1v0gi2yV2sSudD2ohb8yfGM8AuxbyKjiz9BwcSOoRg==")
 
@@ -44,7 +29,7 @@ linkedin = oauth.register(
     refresh_token_url=None,
     api_base_url='https://api.linkedin.com/v2/',
     client_kwargs={'scope': 'r_liteprofile r_emailaddress w_member_social'}
-)
+)'''
 
 #pagina di registrazione
 @app.route("/", methods=['POST', 'GET'])
@@ -84,7 +69,7 @@ def home():
 #opzioni per la tabella candidature
 @app.route("/options", methods=['GET', 'POST'])
 def candidatureOptions():
-    #io qui, a partire dal momento in cui ho inserito un file, ed il formato è corretto, io dovrei passare il file (utilizzare la funzione fromExcelToSQL()) e caricarlo nel database
+    #io qui, a partire dal df.columns[0]momento in cui ho inserito un file, ed il formato è corretto, io dovrei passare il file (utilizzare la funzione fromExcelToSQL()) e caricarlo nel database
     #la conversione del csv è già fatto, ma ora devo prendere il file csv e caricarlo. dovrei prendere solamente il percorso file e bon, risolta la situazione
     if request.method == "POST":
         File="/home/ale/.cache/.fr-L3ZH42/Jobs/uarewelcome.xlsx"
@@ -92,6 +77,8 @@ def candidatureOptions():
         archivio = request.files.get("archive")
         '''if archivio.filename != "":
             print(archivio.filename)'''
+        return render_template("options.html")
+    return render_template("options.html")
 
 #pagina tabella candidature
 @app.route("/candidature", methods=["GET"])
