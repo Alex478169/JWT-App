@@ -1,5 +1,6 @@
 import psycopg2
 import pandas as pd
+import numpy as np
 from fileManipulator import *
 
 def viewDataTable(config, table: str):
@@ -175,24 +176,34 @@ def fromExcelToSQL(config, file:str):
     """
     val = []
     val_new = []
-    dfLen=len(df.columns)
+    df = pd.read_excel(file) 
 
-    df= pd.read_excel(file)
-   
-    create(dfLen)
+    create(config, df)
 
     for col_name in df.columns: 
         for col in df.itertuples():
+            #perché voglio conoscere il valore delle righe? Lo posso ottenere semplicemente con 'df[col_name[0]]' dio maiale
             row_value = getattr(col, col_name, "N/A")
-            val.append(row_value)    
-    for i in val:
-        num = 0
-        value = val[num].replace("’", "")
+            val.append(row_value)
+
+    for i in range(len(val)):
+        value = val[i].replace("’", "")
         val_new.append(value)
-        num += 1
-        
-    insert(dfLen)
-         
+
+    matrice = np.array(val_new).reshape(-1, len(df.columns))
+    df2 = pd.DataFrame(matrice, columns=df.columns)
+    insert(config, df2)
+
+    try:
+        with psycopg2.connect(**config) as conn:
+            cur = conn.cursor()
+            cur.execute("select * from excelFile")
+            value = cur.fetchone()
+            return value
+    except (psycopg2.DatabaseError, Exception) as error:
+        return error
+
+
 def searchSomething(config, company:str):
     """
     Individua e visualizza un risultato nella tabella dell'endpoint "\candidature"
